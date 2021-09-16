@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 
 from graph.model.vae import VAE as Model
-from graph.loss.sample_loss import Loss
+from graph.loss.sample_loss import CodeLoss, ReconstructionLoss
 from data.dataset import Dataset_CIFAR10, Dataset_CIFAR100
 
 from utils.metrics import AverageMeter, mAP
@@ -60,7 +60,8 @@ class Sample(object):
                            self.config.num_residual_hiddens, self.config.embedding_dim).cuda()
 
         # define loss
-        self.loss = Loss().cuda()
+        self.closs = CodeLoss().cuda()
+        self.rloss = ReconstructionLoss().cuda()
 
         # define lr
         self.lr = self.config.learning_rate
@@ -153,7 +154,9 @@ class Sample(object):
             origin_recon, origin_feature, origin_code = self.model(origin)
             trans_recon, trans_feature, trans_code = self.model(trans)
 
-            loss = self.loss(origin_code, trans_code, origin_feature, trans_feature)
+            loss = self.closs(origin_code, trans_code, origin_feature, trans_feature)
+            loss += (self.rloss(origin_recon, origin) + self.rloss(trans_recon, trans)) / 2
+
             loss.backward()
             self.opt.step()
 

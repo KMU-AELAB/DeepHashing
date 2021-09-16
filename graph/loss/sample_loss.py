@@ -3,7 +3,7 @@ import numpy as np
 import torch.nn as nn
 
 
-class Loss(nn.Module):
+class CodeLoss(nn.Module):
     def __init__(self):
         super().__init__()
 
@@ -15,3 +15,13 @@ class Loss(nn.Module):
         feature_similar = (self.loss(origin_feature, origin_code.detach()) +
                            self.loss(trans_feature, trans_code.detach())) / 2
         return code_similar + weight * feature_similar
+
+
+class ReconstructionLoss(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+        self.loss = nn.MSELoss()
+
+    def forward(self, recon, target):
+        return self.loss(recon, target)
