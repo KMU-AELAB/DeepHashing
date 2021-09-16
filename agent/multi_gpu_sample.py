@@ -166,6 +166,7 @@ class Sample(object):
         self.scheduler.step(avg_loss.val)
 
         self.summary_writer.add_image('image/origin', origin[0], self.epoch)
+        self.summary_writer.add_image('image/trans', trans[0], self.epoch)
         self.summary_writer.add_image('image/recon_origin', origin_recon[0], self.epoch)
         self.summary_writer.add_scalar("loss", avg_loss.val, self.epoch)
 
