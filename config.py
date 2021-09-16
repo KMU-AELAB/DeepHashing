@@ -1,8 +1,7 @@
 class Config(object):
     epoch = 5000
-    batch_size = 8
-    learning_rate = 0.002
-    pretraining_step_size = 220
+    batch_size = 1024
+    learning_rate = 0.001
 
     sigma = 1.0
 
@@ -18,3 +17,8 @@ class Config(object):
     summary_dir = 'board'
     checkpoint_dir = 'trained'
     checkpoint_file = 'checkpoint.pth.tar'
+
+    num_hiddens = 128
+    num_residual_hiddens = 32
+    num_residual_layers = 2
+    embedding_dim = 16
