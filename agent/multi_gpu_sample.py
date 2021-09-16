@@ -198,8 +198,8 @@ class Sample(object):
 
             map = mAP(train_code, test_code, train_label, test_label)
 
-            print(f'--- epoch{self.epoch} mAP: {map} / best mAP: {self.best_map} ---')
+        if map > self.best_map:
+            self.best_map = map
+            self.save_checkpoint()
 
-            if map > self.best_map:
-                self.best_map = map
-                self.save_checkpoint()
+        print(f'--- epoch{self.epoch} mAP: {map} / best mAP: {self.best_map} ---')

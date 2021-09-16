@@ -152,4 +152,4 @@ class VAE(nn.Module):
 
         x_recon = self._decoder(decoder_in)
 
-        return x_recon, _z, code.view([-1, self.embedding_dim])
+        return x_recon, _z.view([-1, self.embedding_dim]), code.view([-1, self.embedding_dim])
