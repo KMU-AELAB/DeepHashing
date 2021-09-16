@@ -120,19 +120,15 @@ class VAE(nn.Module):
         self._encoder = Encoder(3, num_hiddens,
                                 num_residual_layers,
                                 num_residual_hiddens)
-        self.conv0 = nn.Conv2d(in_channels=num_hiddens,
+        self.conv1 = nn.Conv2d(in_channels=num_hiddens,
                                out_channels=num_hiddens,
                                kernel_size=4,
                                stride=2, padding=1)
 
-        self.conv1 = nn.Conv2d(in_channels=num_hiddens,
+        self.conv2 = nn.Conv2d(in_channels=num_hiddens,
                                out_channels=embedding_dim,
                                kernel_size=4,
                                stride=2, padding=1)
-        self.conv2 = nn.Conv2d(in_channels=embedding_dim,
-                               out_channels=embedding_dim,
-                               kernel_size=1,
-                               stride=1)
 
         self._decoder = Decoder(embedding_dim + num_hiddens,
                                 num_hiddens,
@@ -144,10 +140,9 @@ class VAE(nn.Module):
 
     def forward(self, x, train_vq=True):
         z = self._encoder(x)
-        z = self.conv0(self.relu(z))
+        z = self.conv1(self.relu(z))
 
-        _z = self.conv1(z)
-        _z = self.avg_pool(self.conv2(_z))
+        _z = self.avg_pool(self.conv2(z))
         code = torch.sign(_z)
 
         _, _, w, h = z.size()

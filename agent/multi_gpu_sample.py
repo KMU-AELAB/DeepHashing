@@ -203,10 +203,10 @@ class Sample(object):
             tqdm_batch.close()
             test_code, test_label = torch.cat(test_code), torch.cat(test_label)
 
-            map = mAP(train_code, test_code, train_label, test_label)
+            _map = mAP(train_code, test_code, train_label, test_label)
 
-        if map > self.best_map:
-            self.best_map = map
+        if _map > self.best_map:
+            self.best_map = _map
             self.save_checkpoint()
 
-        print(f'*** epoch-{self.epoch} mAP: {map} / best mAP: {self.best_map} ***')
+        print(f'*** epoch-{self.epoch} mAP: {_map} / best mAP: {self.best_map} ***')
