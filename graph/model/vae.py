@@ -120,6 +120,10 @@ class VAE(nn.Module):
         self._encoder = Encoder(3, num_hiddens,
                                 num_residual_layers,
                                 num_residual_hiddens)
+        self.conv0 = nn.Conv2d(in_channels=num_hiddens,
+                               out_channels=num_hiddens,
+                               kernel_size=4,
+                               stride=2, padding=1)
 
         self.conv1 = nn.Conv2d(in_channels=num_hiddens,
                                out_channels=embedding_dim,
@@ -136,12 +140,14 @@ class VAE(nn.Module):
                                 num_residual_hiddens)
 
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.relu = nn.ReLU(inplace=True)
 
     def forward(self, x, train_vq=True):
         z = self._encoder(x)
+        z = self.relu(self.conv0(z))
 
-        _z = self.conv1(z)
-        _z = self.conv2(_z)
+        _z = self.relu(self.conv1(z))
+        _z = self.relu(self.conv2(_z))
         _z = self.avg_pool(_z)
         code = torch.sign(_z)
 
