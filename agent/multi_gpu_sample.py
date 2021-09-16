@@ -186,7 +186,7 @@ class Sample(object):
             train_code, train_label = torch.cat(train_code), torch.cat(train_label)
 
             # test dataset
-            tqdm_batch = tqdm(self.test_dataloader, total=len(self.train_dataloader), leave=False)
+            tqdm_batch = tqdm(self.test_dataloader, total=len(self.test_dataloader), leave=False)
             for curr_it, data in enumerate(tqdm_batch):
                 origin = data['origin'].cuda(async=self.config.async_loading)
                 target = data['target'].cuda(async=self.config.async_loading)
