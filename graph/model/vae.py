@@ -140,8 +140,8 @@ class VAE(nn.Module):
     def forward(self, x, train_vq=True):
         z = self._encoder(x)
 
-        _z = self._pre_vq_conv_1(z)
-        _z = self._pre_vq_conv_2(_z)
+        _z = self.conv1(z)
+        _z = self.conv2(_z)
         _z = self.avg_pool(_z)
         code = torch.sign(_z)
 
