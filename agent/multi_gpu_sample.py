@@ -153,7 +153,7 @@ class Sample(object):
             origin_recon, origin_feature, origin_code = self.model(origin)
             trans_recon, trans_feature, trans_code = self.model(trans)
 
-            loss = self.loss(origin_code, trans_code, origin_feature, trans_feature, 0.1, 0.01)
+            loss = self.loss(origin_code, trans_code, origin_feature, trans_feature)
             loss.backward()
             self.opt.step()
 
