@@ -147,8 +147,7 @@ class VAE(nn.Module):
         z = self.relu(self.conv0(z))
 
         _z = self.relu(self.conv1(z))
-        _z = self.conv2(_z)
-        _z = self.avg_pool(_z)
+        _z = self.avg_pool(self.conv2(_z))
         code = torch.sign(_z)
 
         _, _, w, h = z.size()
