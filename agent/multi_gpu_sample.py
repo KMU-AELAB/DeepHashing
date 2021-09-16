@@ -57,7 +57,7 @@ class Sample(object):
 
         # define models
         self.model = Model(self.config.num_hiddens, self.config.num_residual_layers,
-                           self.config.num_residual_hidden, self.config.embedding_dim).cuda()
+                           self.config.num_residual_hiddens, self.config.embedding_dim).cuda()
 
         # define loss
         self.loss = Loss().cuda()
