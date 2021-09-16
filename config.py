@@ -1,19 +1,20 @@
 class Config(object):
-    epoch = 5000
+    data_name = 'cifar10'
+    
+    epoch = 500
     batch_size = 1024
     learning_rate = 0.001
 
     sigma = 1.0
 
     cuda = True
-    gpu_cnt = 4
+    gpu_cnt = 1
 
     async_loading = True
     pin_memory = True
 
-    root_path = '/enter/root/path/'
-    data_path = 'data/enter/remain/path'
-
+    root_path = '/home/M2016551/DeepHashing/'
+    data_directory = 'data'
     summary_dir = 'board'
     checkpoint_dir = 'trained'
     checkpoint_file = 'checkpoint.pth.tar'
