@@ -163,8 +163,11 @@ class Sample(object):
             avg_loss.update(loss)
 
         tqdm_batch.close()
-
         self.scheduler.step(avg_loss.val)
+
+        self.summary_writer.add_image('image/origin', origin[0], self.epoch)
+        self.summary_writer.add_image('image/recon_origin', origin_recon[0], self.epoch)
+        self.summary_writer.add_scalar("loss", avg_loss.val, self.epoch)
 
     def test(self):
         train_code, test_code, train_label, test_label = [], [], [], []
@@ -205,4 +208,4 @@ class Sample(object):
             self.best_map = map
             self.save_checkpoint()
 
-        print(f'--- epoch{self.epoch} mAP: {map} / best mAP: {self.best_map} ---')
+        print(f'*** epoch-{self.epoch} mAP: {map} / best mAP: {self.best_map} ***')
