@@ -123,12 +123,12 @@ class VAE(nn.Module):
         self.conv1 = nn.Conv2d(in_channels=num_hiddens,
                                out_channels=num_hiddens,
                                kernel_size=4,
-                               stride=2, padding=1)
+                               stride=2, padding=1, bias=False)
 
         self.conv2 = nn.Conv2d(in_channels=num_hiddens,
                                out_channels=embedding_dim,
-                               kernel_size=4,
-                               stride=2, padding=1)
+                               kernel_size=3,
+                               stride=1, bias=False)
 
         self._decoder = Decoder(embedding_dim + num_hiddens,
                                 num_hiddens,
